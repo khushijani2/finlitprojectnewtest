@@ -93,7 +93,6 @@
 		</dependency>
 
 
-
 		<!-- Spring Mail -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
