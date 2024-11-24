@@ -1,35 +1,53 @@
 pipeline {
     agent any
 
+    tools {
+        // Specify Maven tool name configured in Jenkins Global Tool Configuration
+        maven 'Maven'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                // Pull the latest changes from the repository
+                // Pull code from the repository
                 checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                // Build the project
+                // Build the project with Maven
                 sh 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                // Run tests
+                // Run tests with Maven
                 sh 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Add deployment steps here if needed
+                echo 'Deploying application...'
             }
         }
     }
 
     post {
+        always {
+            // Actions to perform after every build
+            echo 'Cleaning up...'
+        }
         success {
-            echo 'Build and Tests completed successfully.'
+            // Actions to perform if the build is successful
+            echo 'Build and tests completed successfully!'
         }
         failure {
-            echo 'Build or Tests failed.'
+            // Actions to perform if the build fails
+            echo 'Build or tests failed.'
         }
     }
 }
